@@ -30,7 +30,20 @@ function renderFeature(feature, enabled) {
   toggle.role = "switch";
   toggle.id = `feature-${feature.id}`;
   toggle.checked = enabled;
-  toggle.addEventListener("change", () => setFeature(feature.id, toggle.checked));
+  toggle.addEventListener("change", async () => {
+    if (!toggle.checked || !feature.permissions) {
+      await setFeature(feature.id, toggle.checked);
+      return;
+    }
+    // permissions.request has to be called right in the click handler. The feature is
+    // saved before the answer comes, because the permission prompt may close the popup.
+    const request = browser.permissions.request(feature.permissions);
+    await setFeature(feature.id, true);
+    if (!(await request)) {
+      toggle.checked = false;
+      await setFeature(feature.id, false);
+    }
+  });
   text.htmlFor = toggle.id;
   item.append(toggle);
   return item;

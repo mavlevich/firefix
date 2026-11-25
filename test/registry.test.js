@@ -15,6 +15,12 @@ describe("feature registry", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
+  it("keeps duplicate tabs off by default, since it needs access to all sites", () => {
+    const duplicates = FEATURES.find((feature) => feature.id === "duplicates");
+    expect(duplicates.default).toBe(false);
+    expect(duplicates.permissions).toEqual({ origins: ["<all_urls>"] });
+  });
+
   it("gives every ready feature an apply function", () => {
     for (const feature of FEATURES.filter((f) => f.ready)) {
       expect(typeof feature.apply, feature.id).toBe("function");

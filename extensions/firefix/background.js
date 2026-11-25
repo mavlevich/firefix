@@ -12,6 +12,14 @@ async function applyAll() {
   }
 }
 
+// Listeners have to be added right away when the background starts, so that tab
+// events can wake it up later. Each feature checks on its own whether it is on.
+for (const feature of FEATURES) {
+  if (feature.ready && feature.watch) {
+    feature.watch(async () => (await loadSettings())[feature.id]);
+  }
+}
+
 browser.runtime.onStartup.addListener(applyAll);
 browser.runtime.onInstalled.addListener(applyAll);
 

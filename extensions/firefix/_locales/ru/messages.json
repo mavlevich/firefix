@@ -10,7 +10,7 @@
   "featureTabUnloadDescription": { "message": "Освобождает память от неиспользуемых вкладок" },
 
   "featureDuplicatesTitle": { "message": "Дубли вкладок" },
-  "featureDuplicatesDescription": { "message": "Находит и закрывает повторы" },
+  "featureDuplicatesDescription": { "message": "Подсвечивает вкладки, открытые несколько раз" },
 
   "featureBookmarksTitle": { "message": "Закладки" },
   "featureBookmarksDescription": { "message": "Удобная работа с закладками" }

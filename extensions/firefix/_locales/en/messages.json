@@ -10,7 +10,7 @@
   "featureTabUnloadDescription": { "message": "Frees memory from tabs you do not use" },
 
   "featureDuplicatesTitle": { "message": "Duplicate tabs" },
-  "featureDuplicatesDescription": { "message": "Find and close repeated tabs" },
+  "featureDuplicatesDescription": { "message": "Highlights tabs that are open more than once" },
 
   "featureBookmarksTitle": { "message": "Bookmarks" },
   "featureBookmarksDescription": { "message": "A better way to work with bookmarks" }
