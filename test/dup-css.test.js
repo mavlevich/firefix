@@ -16,7 +16,9 @@ describe("duplicate group rules in userChrome.css", () => {
     for (const code of GROUP_CODES) {
       const label = `[label^="${escape(MARKER + code)}"]`;
       expect(css, code).toContain(`:is([visuallyselected], :hover)${label})`);
-      expect(css, code).toContain(`.tabbrowser-tab${label} > .tab-stack > .tab-background`);
+      const edge = `.tabbrowser-tab${label} > .tab-stack > .tab-background`;
+      expect(css.includes(`${edge},`) || css.includes(`${edge} {`), `edge ${code}`).toBe(true);
+      expect(css, `led ${code}`).toContain(`${edge}::after`);
     }
   });
 });

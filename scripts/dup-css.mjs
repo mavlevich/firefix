@@ -15,22 +15,30 @@ export const END = "/* Duplicate groups: end. */";
 
 const escape = (text) => [...text].map((char) => `\\${char.codePointAt(0).toString(16)}`).join("");
 
-// When the selected or the hovered tab carries a group code, every tab with the same
-// code lights up, the tab itself included. Other groups stay as they are.
-export function groupBlock() {
-  const selectors = GROUP_CODES.map((code) => {
+// One selector per group code: when the selected or the hovered tab carries that code,
+// it matches every tab with the same code, the tab itself included.
+function litSelectors(part) {
+  return GROUP_CODES.map((code) => {
     const label = `[label^="${escape(MARKER + code)}"]`;
     return (
       `#tabbrowser-tabs:has(.tabbrowser-tab:is([visuallyselected], :hover)${label})` +
-      ` .tabbrowser-tab${label} > .tab-stack > .tab-background`
-    );
-  });
+      ` .tabbrowser-tab${label} > .tab-stack > ${part}`
+    ).trim();
+  }).join(",\n");
+}
+
+// The lit group gets an amber edge, and its LEDs glow brighter. Other groups stay as they are.
+export function groupBlock() {
   return [
     START,
-    `${selectors.join(",\n")} {`,
+    `${litSelectors(".tab-background")} {`,
     "  outline: 1px solid var(--firefix-dup) !important;",
     "  outline-offset: -1px !important;",
     "  box-shadow: 0 0 8px var(--firefix-dup-glow) !important;",
+    "}",
+    "",
+    `${litSelectors(".tab-background::after")} {`,
+    "  box-shadow: var(--firefix-dup-led-glow-lit);",
     "}",
     END,
   ].join("\n");
