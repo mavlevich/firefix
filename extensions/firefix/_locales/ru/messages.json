@@ -1,0 +1,17 @@
+{
+  "extName": { "message": "Firefix" },
+  "extDescription": { "message": "Firefox, который починили: тема, вкладки и закладки в одном месте." },
+  "soon": { "message": "скоро" },
+
+  "featureThemeTitle": { "message": "Тема Graphite" },
+  "featureThemeDescription": { "message": "Чёрный фон для OLED-экранов" },
+
+  "featureTabUnloadTitle": { "message": "Автовыгрузка вкладок" },
+  "featureTabUnloadDescription": { "message": "Освобождает память от неиспользуемых вкладок" },
+
+  "featureDuplicatesTitle": { "message": "Дубли вкладок" },
+  "featureDuplicatesDescription": { "message": "Находит и закрывает повторы" },
+
+  "featureBookmarksTitle": { "message": "Закладки" },
+  "featureBookmarksDescription": { "message": "Удобная работа с закладками" }
+}

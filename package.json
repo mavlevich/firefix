@@ -1,0 +1,16 @@
+{
+  "name": "firefix",
+  "private": true,
+  "type": "module",
+  "description": "Firefox, fixed: own extension with a theme, tab and bookmark tweaks.",
+  "scripts": {
+    "dev": "web-ext run --source-dir extensions/firefix",
+    "lint": "web-ext lint --source-dir extensions/firefix",
+    "build": "web-ext build --source-dir extensions/firefix --artifacts-dir dist --overwrite-dest",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^5.1.1",
+    "web-ext": "^10.8.0"
+  }
+}

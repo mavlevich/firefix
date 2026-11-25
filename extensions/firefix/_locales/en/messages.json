@@ -1,0 +1,17 @@
+{
+  "extName": { "message": "Firefix" },
+  "extDescription": { "message": "Firefox, fixed: theme, tab and bookmark tweaks in one place." },
+  "soon": { "message": "soon" },
+
+  "featureThemeTitle": { "message": "Graphite theme" },
+  "featureThemeDescription": { "message": "Black background for OLED screens" },
+
+  "featureTabUnloadTitle": { "message": "Tab auto-unload" },
+  "featureTabUnloadDescription": { "message": "Frees memory from tabs you do not use" },
+
+  "featureDuplicatesTitle": { "message": "Duplicate tabs" },
+  "featureDuplicatesDescription": { "message": "Find and close repeated tabs" },
+
+  "featureBookmarksTitle": { "message": "Bookmarks" },
+  "featureBookmarksDescription": { "message": "A better way to work with bookmarks" }
+}
