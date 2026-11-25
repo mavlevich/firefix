@@ -1,0 +1,108 @@
+/* Firefix browser UI tweaks. Firefox reads this file only at startup.
+   Needs toolkit.legacyUserProfileCustomizations.stylesheets = true (see ../user.js).
+   This file loads as a user style sheet, and Firefox's own styles win over it
+   unless a rule here is !important. So every rule that overrides a Firefox
+   rule uses !important. */
+
+/* Corners.
+   Firefox 160 rounds tabs, toolbar buttons and the address bar with 24 px,
+   which turns narrow tabs into circles. Two radii keep neighbours matching:
+     --firefix-radius        tabs and toolbar buttons
+     --firefix-radius-large  the address bar. A bigger box with the same radius
+                             looks sharper, so it gets a bit more.
+   Presets (tabs and buttons / address bar):
+     soft industrial  6px / 8px
+     closer to Chrome 8px / 10px  (current)
+     rounder          10px / 12px
+   Small round things (the tab close button) stay round.
+   Menus and panels are not changed yet. */
+:root {
+  --firefix-radius: 8px;
+  --firefix-radius-large: 10px;
+
+  --toolbarbutton-border-radius: var(--firefix-radius) !important;
+  --tab-border-radius: var(--firefix-radius) !important;
+  --urlbar-border-radius: var(--firefix-radius-large) !important;
+  /* Boxes inside the address bar sit 3 px from its edge, so their corners
+     follow the outer curve: outer radius minus the gap. */
+  --urlbar-inner-border-radius: max(0px, calc(var(--firefix-radius-large) - 3px)) !important;
+}
+
+.tab-close-button {
+  border-radius: 50% !important;
+}
+
+/* Chrome-style tabs.
+   Stock Firefox stops shrinking horizontal tabs at about 76 px and then scrolls
+   the tab strip. Here tabs keep shrinking down to the favicon, so the strip
+   only scrolls when there are very many tabs. Pinned tabs are not touched. */
+
+:root {
+  --firefix-tab-min-width: 36px;
+  /* Follows the tab text color, so it fits both Graphite and stock themes. */
+  --firefix-tab-separator: color-mix(in srgb, currentColor 35%, transparent);
+}
+
+#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:not([pinned])[fadein] {
+  /* Tabs with a sound or note icon keep the extra room Firefox gives them. */
+  min-width: calc(var(--firefix-tab-min-width) + var(--tab-min-width-extra-icons, 0px)) !important;
+  container: firefix-tab / inline-size;
+  position: relative;
+}
+
+/* Thin line on the start edge of every tab, like in Chrome. The first tab has
+   no tab before it, so it gets no line, and nothing is drawn after the last one.
+   Pinned tabs live in their own container, so the line between them and the
+   first normal tab needs its own selector. */
+#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:not([pinned])[fadein] + .tabbrowser-tab:not([pinned])[fadein]::before,
+#tabbrowser-tabs[orient="horizontal"] #pinned-tabs-container:not(:empty) ~ #tabbrowser-arrowscrollbox > .tabbrowser-tab:first-of-type[fadein]::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -0.5px;
+  inset-block: 30%;
+  width: 1px;
+  background-color: var(--firefix-tab-separator);
+  pointer-events: none;
+}
+
+/* The selected and the hovered tab stand out as solid shapes:
+   no line on either side of them. */
+#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:is([visuallyselected], [multiselected], :hover)::before,
+#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:is([visuallyselected], [multiselected], :hover) + .tabbrowser-tab::before,
+#tabbrowser-tabs[orient="horizontal"] #pinned-tabs-container:has(> .tabbrowser-tab:last-of-type:is([visuallyselected], [multiselected], :hover)) ~ #tabbrowser-arrowscrollbox > .tabbrowser-tab:first-of-type::before {
+  display: none;
+}
+
+/* Narrow tab: no title, the favicon sits in the middle. */
+@container firefix-tab (max-width: 64px) {
+  .tab-label-container,
+  .tab-note-icon {
+    display: none !important;
+  }
+
+  .tab-content {
+    justify-content: center !important;
+    padding-inline: 0 !important;
+  }
+
+  .tab-icon-stack {
+    margin-inline-end: 0 !important;
+  }
+
+  /* Firefox pulls the close button 4 px to the end and trims its start
+     padding to make room for the title. With no title that only shifts it
+     off center, so give it back its full, even box. */
+  .tab-close-button {
+    margin-inline: 0 !important;
+    width: var(--tab-content-button-size) !important;
+    padding: var(--tab-content-button-padding) !important;
+  }
+}
+
+/* Very narrow selected tab: the close button takes the place of the favicon,
+   like in Chrome. Firefox itself hides close buttons on narrow inactive tabs. */
+@container firefix-tab (max-width: 48px) {
+  .tab-content[selected] > .tab-icon-stack {
+    display: none !important;
+  }
+}
