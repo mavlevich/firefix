@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Firefox, fixed: own extension with a theme, tab and bookmark tweaks.",
   "scripts": {
-    "dev": "web-ext run --source-dir extensions/firefix",
+    "dev": "node scripts/dev-profile.mjs && web-ext run --source-dir extensions/firefix --firefox-profile .dev-profile",
     "lint": "web-ext lint --source-dir extensions/firefix",
     "build": "web-ext build --source-dir extensions/firefix --artifacts-dir dist --overwrite-dest",
     "test": "vitest run"

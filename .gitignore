@@ -1,5 +1,6 @@
 node_modules/
 dist/
 web-ext-artifacts/
+.dev-profile/
 .env
 .DS_Store
